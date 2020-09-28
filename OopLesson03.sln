@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaoter03", "Chaoter03\Chaoter03.csproj", "{4E104336-476A-4AAB-A520-DD8CC94D9AFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter4", "Chapter4\Chapter4.csproj", "{7B225E32-1029-438A-BDCF-023F35FA8BC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4E104336-476A-4AAB-A520-DD8CC94D9AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E104336-476A-4AAB-A520-DD8CC94D9AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E104336-476A-4AAB-A520-DD8CC94D9AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B225E32-1029-438A-BDCF-023F35FA8BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B225E32-1029-438A-BDCF-023F35FA8BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B225E32-1029-438A-BDCF-023F35FA8BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B225E32-1029-438A-BDCF-023F35FA8BC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
