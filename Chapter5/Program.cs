@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chapter5 {
     class Program {
+        static int count = 0;
         static void Main(string[] args) {
             //5-1
             var s1 = Console.ReadLine();
@@ -49,8 +50,8 @@ namespace Chapter5 {
             //5-3.5
             var array = st.Split(' ').ToArray();
             if (array.Length > 0) {
-                var sb = new StringBuilder(array[0]);
-                foreach (var word in array) {
+                var sb = new StringBuilder(array[1]);
+                foreach (var word in array.Skip(sb[0])) {
                     sb.Append(word);
                     sb.Append(" ");
                 }
@@ -58,8 +59,25 @@ namespace Chapter5 {
             }
 
             //5-4
-            string textbk = "Novelist=谷崎潤一郎;BestWork=春琴抄;Born=1886";
-            //var nyan = 
+            
+            var textbk = "Novelist=谷崎潤一郎;BestWork=春琴抄;Born=1886";
+            foreach (var nxs in textbk.Split(';')) {
+                var data = nxs.Split('=');
+                Console.WriteLine($" {Info(count.ToString())}{data[1]}");
+                count++;
+            }
+            
+        }
+            public static string Info(string wd) {
+            switch (count) {
+                case 0:
+                    return "作家：";
+                case 1:
+                    return "代表作：";
+                case 2:
+                    return "誕生年：";
+            }return "a";
+                
             
         }
     }
