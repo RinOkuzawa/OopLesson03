@@ -50,8 +50,8 @@ namespace Chapter5 {
             //5-3.5
             var array = st.Split(' ').ToArray();
             if (array.Length > 0) {
-                var sb = new StringBuilder(array[1]);
-                foreach (var word in array.Skip(sb[0])) {
+                var sb = new StringBuilder(array[0]);
+                foreach (var word in array.Skip(1)) {
                     sb.Append(word);
                     sb.Append(" ");
                 }
