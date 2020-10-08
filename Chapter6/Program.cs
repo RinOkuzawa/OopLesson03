@@ -7,62 +7,49 @@ using System.Threading.Tasks;
 namespace Chapter6 {
     class Program {
         static void Main(string[] args) {
-            
-            var numbers = new List<int> { 9,7,-5,4,2,5,4,2,-4,8,-1,6,4,};
-            Console.WriteLine($"平均値:{numbers.Average()}");
-            Console.WriteLine($"合計:{numbers.Sum()}");
-            Console.WriteLine($"最小値:{numbers.Where((x => x >= 0)).Min()}");
-            Console.WriteLine($"最大値:{numbers.Max()}");
+            //整数の例
+            var numbers = new List<int> { 19, 17, 15, 24, 12, 25, 14, 20, 12, 28, 19, 30, 24 };
 
-            bool exits = numbers.Any(n => n % 7 == 0);
+            //var strings = numbers.Select(n => n.ToString("0000")).ToArray();
+            //foreach (var str in strings) {
+            //    Console.WriteLine(str);
+            //}
 
-            var results = numbers.Where(n => n > 0).Take(3);
-            foreach (var item in results) {
+            numbers.Select(n => n.ToString("0000")).Distinct().ToList().ForEach(s => Console.Write(s + " "));
+            Console.WriteLine();
+
+            var sortednumbers = numbers.OrderBy(n=>n).Distinct();
+            foreach (var item in sortednumbers) {
                 Console.Write(item + " ");
             }
             Console.WriteLine();
 
-            var books = Books.GetBooks();
-            Console.WriteLine($"本の平均価格:{books.Average(n=>n.Price)}");
-            Console.WriteLine($"本の合計価格:{books.Sum(n=>n.Price)}");
-            Console.WriteLine($"本のページが最大:{books.Max(n=>n.Pages)}");
-            Console.WriteLine($"高価な本:{books.Max(n => n.Price)}");
-            Console.WriteLine($"タイトルに物語がある冊数:{books.Count(x=>x.Title.Contains("物語"))}");
 
-            //600ページを超える書籍があるか
-            Console.WriteLine("600ページを超える書籍が");
-            Console.WriteLine(books.Any(n => n.Pages > 600)? "ある" : "ない");
-            //すべてが200ページ以上の書籍か
-            Console.WriteLine("すべての本は200ページ以上か");
-            Console.WriteLine(books.All(n => n.Pages >= 200) ? "Yes" : "No");
-            //400ページを超える本は何冊目か？(FirstOrDefaultメソッド)
-            //var book = books.FirstOrDefault(x => x.Pages > 400);
-            //int i;
-            //for (i=0;i<books.Count;i++) {
-            //    if (books[i].Title==book.Title) {
-            //        break;
-            //    }
+            //文字列の例
+            var words = new List<string> { 
+                "Microsoft", "Apple", "Google", "Oracle","Facebook" };
+
+            var lower = words.Select(s => s.ToLower()).ToArray();
+            foreach (var item in lower) {
+                Console.WriteLine(item);
+            }
+
+            ////オブジェクトの例
+            //var books = Books.GetBooks();
+            ////タイトルリスト
+            //var titles = books.Select(x => x.Title).ToArray();
+            //foreach (var tt in titles) {
+            //    Console.Write(tt+" ");
             //}
 
-            var count = books.FindIndex(x => x.Pages > 400);
-            Console.WriteLine($"400ページを超える本は{count+1}冊目です");
+            //Console.WriteLine();
 
-            //本の値段が400円以上のものを３冊表示
-            var fprice = books.Where(x => x.Price >= 400).Take(3);
-            foreach (var item in fprice) {
-                
-                    Console.Write(item.Title + " ");
-            }
-            Console.WriteLine(numbers.Where(n=>n>0));
-            foreach (var item in ) {
-
-            }
-
-
-
-
-
-
+            //var desc = books.OrderByDescending(n => n.Pages);
+            //foreach (var item in desc) {
+            //    Console.Write(item.Title+item.Pages + " ");
+            //}
+            //Console.WriteLine();
+            Console.WriteLine();
 
 
 
@@ -73,20 +60,59 @@ namespace Chapter6 {
 
 
             //6-1.1
+            Console.WriteLine("---6-1.1---");
             var numberss = new int[] { 5, 10, 17, 93, 21, 10, 40, 21, 3, 35 };
             Console.WriteLine($"最大値は:{numberss.Max()}");
+            Console.WriteLine();
 
             //6-1.2
+            Console.WriteLine("---6-1.2---");
             var la = numberss.Length-2;
             foreach (var item in numberss.Skip(la)) {
                 Console.WriteLine(item);
             }
 
+            Console.WriteLine();
             //6-1.3
-            Console.WriteLine(numbers.w);
+            Console.WriteLine("---6-1.3---");
+            var ss = numberss.Select(n => n.ToString()).ToArray();
+            foreach (var str in ss) {
+                Console.Write(str + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+
+            //6-1.4
+            Console.WriteLine("---6-1.4---");
+            var small = numberss.OrderBy(n => n).Take(3);
+            foreach (var item in small) {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+
+            //6-1.5
+            Console.WriteLine("---6-1.5---");
+            var bigten = numberss.Where(n => n>10).Distinct();
+            foreach (var item in bigten) {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+
+            //6-2.1
+            var books = new List<Book> {
+               new Book { Title = "C#プログラミングの新常識", Price = 3800, Pages = 378 },
+               new Book { Title = "ラムダ式とLINQの極意", Price = 2500, Pages = 312 },
+               new Book { Title = "ワンダフル・C#ライフ", Price = 2900, Pages = 385 },
+               new Book { Title = "一人で学ぶ並列処理プログラミング", Price = 4800, Pages = 464 },
+               new Book { Title = "フレーズで覚えるC#入門", Price = 5300, Pages = 604 },
+               new Book { Title = "私でも分かったASP.NET　MVC", Price = 3200, Pages = 453 },
+               new Book { Title = "楽しいC#プログラミング教室", Price = 2540, Pages = 348 },
+            };
+
+            Console.WriteLine(books.Where(s=>s.Title == "ワンダフル・C#ライフ"));
+
         }
-
-
     }
     
 }
