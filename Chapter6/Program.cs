@@ -98,6 +98,7 @@ namespace Chapter6 {
                 Console.Write(item + " ");
             }
             Console.WriteLine();
+            Console.WriteLine();
 
             //6-2.1
             var books = new List<Book> {
@@ -110,8 +111,44 @@ namespace Chapter6 {
                new Book { Title = "楽しいC#プログラミング教室", Price = 2540, Pages = 348 },
             };
 
-            Console.WriteLine(books.Where(s=>s.Title == "ワンダフル・C#ライフ"));
+            Console.WriteLine("---6-2.1---");
+            var mg = books.FirstOrDefault(x => x.Title == "ワンダフル・C#ライフ");
+            Console.WriteLine($"ワンダフル・C#ライフは 価格:{mg.Price} ページ数:{mg.Pages}");
+            Console.WriteLine();
 
+
+            Console.WriteLine("---6-2.2---");
+            var ct = books.Count(x => x.Title.Contains("C#"));
+            Console.WriteLine($"C#が含まれている書籍の数は:{ct}");
+            Console.WriteLine();
+
+            Console.WriteLine("---6-2.3---");
+            var avg = books.Where(x => x.Title.Contains("C#")).Average(x=>x.Pages);
+            Console.WriteLine($"C#がタイトルに含まれる書籍の平均ページ数:{avg}");
+            Console.WriteLine();
+
+            Console.WriteLine("---6-2.4---");
+            var max = books.FirstOrDefault(x => x.Price >= 4000);
+            Console.WriteLine($"4000円以上の最初の本のタイトルは:{max.Title}");
+            Console.WriteLine();
+
+            Console.WriteLine("---6-2.5---");
+            var maxp = books.Where(x=>x.Price<4000).Max(x=>x.Pages);
+            Console.WriteLine($"4000円未満の本で最大ページ数:{maxp}");
+            Console.WriteLine();
+
+            Console.WriteLine("---6-2.6---");
+            var tk = books.Where(x => x.Pages >= 400).OrderByDescending(x => x.Price);
+            foreach (var item in tk) {
+                Console.WriteLine($"タイトル:{item.Title} 価格:{item.Price}");
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("---6-2.7---");
+            var booook = books.Where(x=>x.Title.Contains("C#")&&x.Pages<=500);
+            foreach (var item in booook) {
+                Console.WriteLine($"{item.Title}");
+            }
         }
     }
     
