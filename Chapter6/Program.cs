@@ -102,7 +102,7 @@ namespace Chapter6 {
 
             //6-2.1
             var books = new List<Book> {
-               new Book { Title = "C#プログラミングの新常識", Price = 3800, Pages = 378 },
+               new Book { Title = "C#プログラミングの新常識C#", Price = 3800, Pages = 378 },
                new Book { Title = "ラムダ式とLINQの極意", Price = 2500, Pages = 312 },
                new Book { Title = "ワンダフル・C#ライフ", Price = 2900, Pages = 385 },
                new Book { Title = "一人で学ぶ並列処理プログラミング", Price = 4800, Pages = 464 },
@@ -110,6 +110,17 @@ namespace Chapter6 {
                new Book { Title = "私でも分かったASP.NET　MVC", Price = 3200, Pages = 453 },
                new Book { Title = "楽しいC#プログラミング教室", Price = 2540, Pages = 348 },
             };
+
+            //すべての書籍から「C#」の文字がいくつあるかをカウントする
+            int count = 0;
+            foreach (var book in books) {
+                for (int i=0;i<book.Title.Length-1;i++) {
+                    if ((book.Title[i] == 'C') && (book.Title[i + 1] == '#')) {
+                        count++;
+                    }
+                }
+            }
+            Console.WriteLine($"文字列ぬ含まれる「C#」の数は:{count}");
 
             Console.WriteLine("---6-2.1---");
             var mg = books.FirstOrDefault(x => x.Title == "ワンダフル・C#ライフ");
@@ -133,8 +144,7 @@ namespace Chapter6 {
             Console.WriteLine();
 
             Console.WriteLine("---6-2.5---");
-            var maxp = books.Where(x=>x.Price<4000).Max(x=>x.Pages);
-            Console.WriteLine($"4000円未満の本で最大ページ数:{maxp}");
+            Console.WriteLine($"4000円未満の本で最大ページ数:{books.Where(x => x.Price < 4000).Max(x => x.Pages)}");
             Console.WriteLine();
 
             Console.WriteLine("---6-2.6---");
