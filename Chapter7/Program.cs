@@ -65,6 +65,38 @@ namespace Chapter7 {
             //foreach (var word in we.Extract()) {
             //    Console.WriteLine(word);
             //}
+
+
+
+
+
+
+
+
+
+
+            //static public void DuplicateKeySample() {
+        //    // ディクショナリの初期化
+        //    var dict = new Dictionary<string, List<string>>() {
+        //       { "PC", new List<string> { "パーソナル コンピュータ", "プログラム カウンタ", } },
+        //       { "CD", new List<string> { "コンパクト ディスク", "キャッシュ ディスペンサー", } },
+        //    };
+        //
+        //    // ディクショナリに追加
+        //    var key = "EC";
+        //    var value = "電子商取引";
+        //    if (dict.ContainsKey(key)) {
+        //        dict[key].Add(value);
+        //    } else {
+        //        dict[key] = new List<string> { value };
+        //    }
+        //
+        //    // ディクショナリの内容を列挙
+        //    foreach (var item in dict) {
+        //        foreach (var term in item.Value) {
+        //            Console.WriteLine("{0} : {1}", item.Key, term);
+        //        }
+        //    }
             #endregion
             
             Console.WriteLine("**********************");
@@ -112,35 +144,6 @@ namespace Chapter7 {
                 }
             }
         }
-
-
-
-
-
-        static public void DuplicateKeySample() {
-            // ディクショナリの初期化
-            var dict = new Dictionary<string, List<string>>() {
-               { "PC", new List<string> { "パーソナル コンピュータ", "プログラム カウンタ", } },
-               { "CD", new List<string> { "コンパクト ディスク", "キャッシュ ディスペンサー", } },
-            };
-
-            // ディクショナリに追加
-            var key = "EC";
-            var value = "電子商取引";
-            if (dict.ContainsKey(key)) {
-                dict[key].Add(value);
-            } else {
-                dict[key] = new List<string> { value };
-            }
-
-            // ディクショナリの内容を列挙
-            foreach (var item in dict) {
-                foreach (var term in item.Value) {
-                    Console.WriteLine("{0} : {1}", item.Key, term);
-                }
-            }
-        }
-
         
     }
 }
