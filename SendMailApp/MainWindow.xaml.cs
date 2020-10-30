@@ -21,5 +21,13 @@ namespace SendMailApp {
         public MainWindow() {
             InitializeComponent();
         }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }
