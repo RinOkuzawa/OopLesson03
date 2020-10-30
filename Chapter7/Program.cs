@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -99,50 +100,56 @@ namespace Chapter7 {
         //    }
             #endregion
             
-            Console.WriteLine("**********************");
-            Console.WriteLine("* 辞書登録プログラム *");
-            Console.WriteLine("**********************");
-            Console.WriteLine();
-            //辞書
-            var dict = new Dictionary<string, List<string>>();
+            // コンストラクタ呼び出し
+            var abbrs = new Abbreviations();
 
+            // Addメソッドの呼び出し例
+            abbrs.Add("IOC", "国際オリンピック委員会");
+            abbrs.Add("NPT", "核兵器不拡散条約");
 
-            while (true) {
-                Console.WriteLine("1.登録　2.内容を表示　3.終了");
-                Console.Write(">");
-                int select = int.Parse(Console.ReadLine());
-                Console.WriteLine();
-                
-
-
-                switch (select) {
-                    case 1:
-                        Console.Write("KEYを入力:");
-                        var key = Console.ReadLine();
-                        Console.Write("VALUEを入力:");
-                        var value = Console.ReadLine();
-                        if (dict.ContainsKey(key)) {
-                            dict[key].Add(value);
-                        } else {
-                            dict[key] = new List<string> { value };
-                        }
-                        Console.WriteLine("登録しました！");
-                        Console.WriteLine();
-                        break;
-                    case 2:
-                        foreach (var item in dict) {
-                            foreach (var nene in item.Value) {
-                                Console.WriteLine($"{item.Key} : { nene}");
-                            }
-                        }
-                        Console.WriteLine();
-                        break;
-
-                    case 3:
-                        Environment.Exit(0);
-                        break;
-                }
+            //問題7.2.3
+            //Countプロパティを呼び出して数を出力させる
+            //
+            var count = abbrs.Count;
+            Console.WriteLine(count);
+            //Removeメソッドを呼び出して要素を削除する
+            if (abbrs.Remove("NPT")) {
+                Console.WriteLine("削除成功");
+            } else {
+                Console.WriteLine("削除失敗");
             }
+            Console.WriteLine();
+
+            //問題7.2.4
+            foreach (var item in abbrs.Where(x => x.Key.Length == 3)) {
+                Console.WriteLine(item.Key);
+            }
+
+            // インデクサの利用例
+            var names = new[] { "WHO", "FIFA", "NPT", };
+            foreach (var name in names) {
+                var fullname = abbrs[name];
+                if (fullname == null)
+                    Console.WriteLine("{0}は見つかりません", name);
+                else
+                    Console.WriteLine("{0}={1}", name, fullname);
+            }
+            Console.WriteLine();
+
+            // ToAbbreviationメソッドの利用例
+            var japanese = "東南アジア諸国連合";
+            var abbreviation = abbrs.ToAbbreviation(japanese);
+            if (abbreviation == null)
+                Console.WriteLine("{0} は見つかりません", japanese);
+            else
+                Console.WriteLine("「{0}」の略語は {1} です", japanese, abbreviation);
+            Console.WriteLine();
+
+            // FindAllメソッドの利用例
+            foreach (var item in abbrs.FindAll("国際")) {
+                Console.WriteLine("{0}={1}", item.Key, item.Value);
+            }
+            Console.WriteLine();
         }
         
     }
