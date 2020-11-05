@@ -41,7 +41,7 @@ namespace SendMailApp {
             sc.SendAsyncCancel();
         }
 
-        //メース送信処理
+        //メール送信処理
         private void SendButton_Click(object sender, RoutedEventArgs e) {
             try {
                 MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbTo.Text);
