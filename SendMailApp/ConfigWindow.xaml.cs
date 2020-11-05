@@ -17,6 +17,8 @@ namespace SendMailApp {
     /// ConfigWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class ConfigWindow : Window {
+
+
         public ConfigWindow() {
             InitializeComponent();
         }
