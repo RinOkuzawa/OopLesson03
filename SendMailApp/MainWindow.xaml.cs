@@ -44,16 +44,37 @@ namespace SendMailApp {
         //メール送信処理
         private void SendButton_Click(object sender, RoutedEventArgs e) {
             try {
-                MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbTo.Text);
+                
+                MailMessage msg = new MailMessage("ojsinfosys01@gmail.com",tbTo.Text);
 
                 msg.Subject = tbTitle.Text; //件名
                 msg.Body = tbBody.Text; //本文
+                if (tbCc.Text != "") {
+                    //CC
+                    msg.CC.Add(tbCc.Text);
+                }
 
-                
+                if (tbBcc.Text != "") {
+                    //BCC
+                    msg.Bcc.Add(tbBcc.Text);
+                }
+               
+
                 sc.Host = "smtp.gmail.com"; //SMTPサーバの設定
                 sc.Port = 587;
                 sc.EnableSsl = true;
                 sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
+
+                msg.From = new MailAddress("ojsinfosys01@gmail.com");
+
+                #region
+                //// TOの宛先メールアドレスを設定します。
+                //msg.To.Add(tbTo.Text);
+                //// 複数の宛先を設定するには、カンマ区切りでメールアドレスを追加します。
+                //msg.To.Add(", " + tbTo.Text);
+
+                //msg.To.Add(", " + tbTo.Text);
+                #endregion
 
                 //sc.Send(msg);  //送信
                 sc.SendMailAsync(msg);
