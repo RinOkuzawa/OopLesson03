@@ -85,5 +85,25 @@ namespace SendMailApp {
             }
 
         }
+
+        //設定
+        private void btConfig_Click(object sender, RoutedEventArgs e) {
+            ConfigWindow cw = new ConfigWindow();
+            cw.Show();
+            Config cf = (Config.GetInstance()).GetDefaultStatus();
+            cw.tbSmtp.Text = cf.Smtp;
+            cw.tbSender.Text = cf.MailAddress;
+            cw.tbPort.Text = cf.Port.ToString();
+            cw.tbPassWord.Password = cf.PassWord;
+            cw.cbSsl.IsChecked = cf.Ssl;
+
+        }
+
+        //メインウィンドウがロードされるタイミングで呼び出される
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+
+            AccessedThroughPropertyAttribute attribute = new AccessedThroughPropertyAttribute("aaaa");
+            attribute.Match(sender);
+        }
     }
 }
