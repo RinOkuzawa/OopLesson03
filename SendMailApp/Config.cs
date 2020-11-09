@@ -29,7 +29,7 @@ namespace SendMailApp {
 
         //初期設定
         public void DefaultSet() {
-            Smtp = "smtp.gamil.com";
+            Smtp = "smtp.gmail.com";
             MailAddress = "ojsinfosys01@gmail.com";
             PassWord = "ojsInfosys2020";
             Port = 587;
@@ -51,6 +51,14 @@ namespace SendMailApp {
             this.Port = port;
             this.Ssl = ssl;
             return true;
+        }
+
+        public void Serialize() {
+
+        }
+
+        public void DeSerialize() {
+
         }
     }
 }

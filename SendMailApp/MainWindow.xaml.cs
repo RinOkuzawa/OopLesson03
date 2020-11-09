@@ -43,9 +43,10 @@ namespace SendMailApp {
 
         //メール送信処理
         private void SendButton_Click(object sender, RoutedEventArgs e) {
+            Config cf = Config.GetInstance();
             try {
                 
-                MailMessage msg = new MailMessage("ojsinfosys01@gmail.com",tbTo.Text);
+                MailMessage msg = new MailMessage(cf.MailAddress,tbTo.Text);
 
                 msg.Subject = tbTitle.Text; //件名
                 msg.Body = tbBody.Text; //本文
@@ -58,14 +59,14 @@ namespace SendMailApp {
                     //BCC
                     msg.Bcc.Add(tbBcc.Text);
                 }
-               
 
-                sc.Host = "smtp.gmail.com"; //SMTPサーバの設定
-                sc.Port = 587;
-                sc.EnableSsl = true;
-                sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
 
-                msg.From = new MailAddress("ojsinfosys01@gmail.com");
+                sc.Host = cf.Smtp; //SMTPサーバの設定
+                sc.Port = cf.Port;
+                sc.EnableSsl = cf.Ssl;
+                sc.Credentials = new NetworkCredential(cf.MailAddress, cf.PassWord);
+
+                msg.From = new MailAddress(cf.MailAddress);
 
                 #region
                 //// TOの宛先メールアドレスを設定します。
@@ -101,9 +102,13 @@ namespace SendMailApp {
 
         //メインウィンドウがロードされるタイミングで呼び出される
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-
+            Config.GetInstance().DeSerialize();
             AccessedThroughPropertyAttribute attribute = new AccessedThroughPropertyAttribute("aaaa");
             attribute.Match(sender);
+        }
+
+        private void Window_Closed(object sender, EventArgs e) {
+            Config.GetInstance().Serialize();
         }
     }
 }

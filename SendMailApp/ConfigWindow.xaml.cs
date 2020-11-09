@@ -28,6 +28,7 @@ namespace SendMailApp {
             Config cf =( Config.GetInstance()).GetDefaultStatus();
             tbSmtp.Text = cf.Smtp;
             tbSender.Text = cf.MailAddress;
+            tbUserName.Text = cf.MailAddress;
             tbPort.Text = cf.Port.ToString();
             tbPassWord.Password = cf.PassWord;
             cbSsl.IsChecked = cf.Ssl;
@@ -65,6 +66,9 @@ namespace SendMailApp {
             this.tbPort.Text = cf.Port.ToString();
             this.tbPassWord.Password = cf.PassWord;
             this.cbSsl.IsChecked = cf.Ssl;
+            this.tbUserName.Text = cf.MailAddress;
         }
+
+        
     }
 }
