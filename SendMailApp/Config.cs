@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace SendMailApp {
     public class Config { 
@@ -54,7 +56,7 @@ namespace SendMailApp {
         }
 
         public void Serialize() {
-
+            
         }
 
         public void DeSerialize() {
