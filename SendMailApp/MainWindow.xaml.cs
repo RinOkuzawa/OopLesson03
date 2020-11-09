@@ -90,7 +90,7 @@ namespace SendMailApp {
         private void btConfig_Click(object sender, RoutedEventArgs e) {
             ConfigWindow cw = new ConfigWindow();
             cw.Show();
-            Config cf = (Config.GetInstance()).GetDefaultStatus();
+            Config cf = Config.GetInstance();
             cw.tbSmtp.Text = cf.Smtp;
             cw.tbSender.Text = cf.MailAddress;
             cw.tbPort.Text = cf.Port.ToString();

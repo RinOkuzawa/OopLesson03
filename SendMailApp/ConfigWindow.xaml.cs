@@ -35,24 +35,36 @@ namespace SendMailApp {
 
         }
 
+        //キャンセルボタン
         private void btCancel_Click(object sender, RoutedEventArgs e) {
-            Close();
+            this.Close();
         }
 
         //適用(更新)
         private void btApply_Click(object sender, RoutedEventArgs e) {
-            
             (Config.GetInstance()).UpdateStatus(
                 tbSmtp.Text,
                 tbSender.Text,
                 tbPassWord.Password,
                 int.Parse(tbPort.Text),
-                cbSsl.IsChecked ?? false
+                cbSsl.IsChecked ?? false　//更新処理を呼び出す
                 );
         }
 
+        //OKボタン
         private void btOk_Click(object sender, RoutedEventArgs e) {
+            btApply_Click(sender,e);
+            this.Close();
+        }
 
+        //ロード時に一度だけ呼び出される
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            Config cf = Config.GetInstance();
+            this.tbSmtp.Text = cf.Smtp;
+            this.tbSender.Text = cf.MailAddress;
+            this.tbPort.Text = cf.Port.ToString();
+            this.tbPassWord.Password = cf.PassWord;
+            this.cbSsl.IsChecked = cf.Ssl;
         }
     }
 }

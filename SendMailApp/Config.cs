@@ -10,7 +10,10 @@ namespace SendMailApp {
         private static Config instance;
         //インスタンスの取得
         public static Config GetInstance() {
-            return instance ?? new Config();
+            if (instance == null) {
+                instance = new Config();
+            }
+            return instance;
         }
 
         public string Smtp { get; set; }　//SMTPサーバー
