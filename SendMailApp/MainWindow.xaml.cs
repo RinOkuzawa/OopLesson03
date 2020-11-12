@@ -90,17 +90,15 @@ namespace SendMailApp {
 
         }
 
-        //設定
-        private void btConfig_Click(object sender, RoutedEventArgs e) {
+        //設定ボタンイベントハンドラ
+        private static void ConfigWindowShow() {
             ConfigWindow cw = new ConfigWindow();
-            cw.Show();
-            Config cf = Config.GetInstance();
-            cw.tbSmtp.Text = cf.Smtp;
-            cw.tbSender.Text = cf.MailAddress;
-            cw.tbPort.Text = cf.Port.ToString();
-            cw.tbPassWord.Password = cf.PassWord;
-            cw.cbSsl.IsChecked = cf.Ssl;
+            cw.ShowDialog();
+        }
 
+        //設定ボタン
+        private void btConfig_Click(object sender, RoutedEventArgs e) {
+            ConfigWindowShow();
         }
 
         //メインウィンドウがロードされるタイミングで呼び出される
@@ -114,10 +112,11 @@ namespace SendMailApp {
                 }
                
             } catch(Exception ex) {
-                MessageBox.Show(ex.Message);
+                ConfigWindowShow();
             }
         }
 
+        //メインウィンドウがクローズされるタイミングで呼び出される
         private void Window_Closed(object sender, EventArgs e) {
             try {
                 Config.GetInstance().Serialize();

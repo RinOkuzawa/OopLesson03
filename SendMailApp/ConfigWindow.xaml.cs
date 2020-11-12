@@ -42,13 +42,7 @@ namespace SendMailApp {
 
         //適用(更新)
         private void btApply_Click(object sender, RoutedEventArgs e) {
-            (Config.GetInstance()).UpdateStatus(
-                tbSmtp.Text,
-                tbSender.Text,
-                tbPassWord.Password,
-                int.Parse(tbPort.Text),
-                cbSsl.IsChecked ?? false　
-                );
+            CancelSaveStatus();
         }
 
         //OKボタン
@@ -68,6 +62,27 @@ namespace SendMailApp {
             this.tbUserName.Text = cf.MailAddress;
         }
 
-        
+        //未入力項目チェックメソッド
+        public static void CancelSaveStatus() {
+            ConfigWindow cw = new ConfigWindow();
+            if (cw.tbSmtp.Text == "" || cw.tbUserName.Text == "" || cw.tbSender.Text == "" || cw.tbPort.Text == "" || cw.tbPassWord.Password == "") {
+                MessageBox.Show("入力されていない項目があります");
+            } else {
+                (Config.GetInstance()).UpdateStatus(
+                cw.tbSmtp.Text,
+                cw.tbSender.Text,
+                cw.tbPassWord.Password,
+                int.Parse(cw.tbPort.Text),
+                cw.cbSsl.IsChecked ?? false
+                );
+            }
+
+        }
+
+
+        public static void DataCheck() {
+            ConfigWindow cw = new ConfigWindow();
+            
+        }
     }
 }
