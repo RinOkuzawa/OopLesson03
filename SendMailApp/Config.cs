@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -56,11 +57,17 @@ namespace SendMailApp {
         }
 
         public void Serialize() {
-            
+            using (var writer = XmlWriter.Create("Mail.xml")) {
+                var serializer = new XmlSerializer(instance.GetType());
+                serializer.Serialize(writer,instance);
+            }
         }
 
         public void DeSerialize() {
-
+            using (var reader = XmlReader.Create("Mail.xml")) {
+                var serializer = new XmlSerializer(typeof(Config));
+                Config.instance = serializer.Deserialize(reader) as Config;
+            }
         }
     }
 }

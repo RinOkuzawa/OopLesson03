@@ -18,7 +18,6 @@ namespace SendMailApp {
     /// ConfigWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class ConfigWindow : Window {
-        //Config config = new Config();
 
         public ConfigWindow() {
             InitializeComponent();
@@ -48,13 +47,13 @@ namespace SendMailApp {
                 tbSender.Text,
                 tbPassWord.Password,
                 int.Parse(tbPort.Text),
-                cbSsl.IsChecked ?? false　//更新処理を呼び出す
+                cbSsl.IsChecked ?? false　
                 );
         }
 
         //OKボタン
         private void btOk_Click(object sender, RoutedEventArgs e) {
-            btApply_Click(sender,e);
+            btApply_Click(sender,e);  //更新処理を呼び出す
             this.Close();
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -102,13 +103,20 @@ namespace SendMailApp {
 
         //メインウィンドウがロードされるタイミングで呼び出される
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            Config.GetInstance().DeSerialize();
-            AccessedThroughPropertyAttribute attribute = new AccessedThroughPropertyAttribute("aaaa");
-            attribute.Match(sender);
+            try {
+                Config.GetInstance().DeSerialize();
+            } catch(Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e) {
-            Config.GetInstance().Serialize();
+            try {
+                Config.GetInstance().Serialize();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }
