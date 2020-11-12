@@ -38,8 +38,10 @@ namespace SendMailApp {
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e) {
-            
-            sc.SendAsyncCancel();
+            if (sc == null) {
+                sc.SendAsyncCancel();
+            }
+           
         }
 
         //メール送信処理
@@ -103,8 +105,14 @@ namespace SendMailApp {
 
         //メインウィンドウがロードされるタイミングで呼び出される
         private void Window_Loaded(object sender, RoutedEventArgs e) {
+            
             try {
-                Config.GetInstance().DeSerialize();
+                if (File.Exists("Mail.xml")) {
+                    Config.GetInstance().DeSerialize();
+                } else {
+                    btConfig_Click(sender, e);                  
+                }
+               
             } catch(Exception ex) {
                 MessageBox.Show(ex.Message);
             }
