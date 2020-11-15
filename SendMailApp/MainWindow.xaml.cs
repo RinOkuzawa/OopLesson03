@@ -22,10 +22,19 @@ namespace SendMailApp {
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class MainWindow : Window {
+
         SmtpClient sc = new SmtpClient();
+
         public MainWindow() {
             InitializeComponent();
             sc.SendCompleted += Sc_sendCompleted;
+        }
+
+        //設定ボタンイベントハンドラ
+        private static void ConfigWindowShow() {
+
+            ConfigWindow configWindow = new ConfigWindow();
+            configWindow.ShowDialog();
         }
 
         //送信完了イベント
@@ -37,64 +46,44 @@ namespace SendMailApp {
             }
         }
 
+        //送信キャンセル
         private void CancelButton_Click(object sender, RoutedEventArgs e) {
             if (sc == null) {
                 sc.SendAsyncCancel();
             }
-           
         }
 
         //メール送信処理
-        private void SendButton_Click(object sender, RoutedEventArgs e) {
-            Config cf = Config.GetInstance();
+        private void SendButton_Click(object sender, RoutedEventArgs e) {          
             try {
-                
-                MailMessage msg = new MailMessage(cf.MailAddress,tbTo.Text);
+                Config cf = Config.GetInstance();
+                MailMessage msg = new MailMessage(cf.MailAddress,tbTo.Text,tbTitle.Text,tbBody.Text);
 
-                msg.Subject = tbTitle.Text; //件名
-                msg.Body = tbBody.Text; //本文
+                //msg.Subject = tbTitle.Text; //件名
+                //msg.Body = tbBody.Text; //本文
+
                 if (tbCc.Text != "") {
-                    //CC
                     msg.CC.Add(tbCc.Text);
                 }
-
                 if (tbBcc.Text != "") {
-                    //BCC
                     msg.Bcc.Add(tbBcc.Text);
                 }
-
 
                 sc.Host = cf.Smtp; //SMTPサーバの設定
                 sc.Port = cf.Port;
                 sc.EnableSsl = cf.Ssl;
                 sc.Credentials = new NetworkCredential(cf.MailAddress, cf.PassWord);
 
-                msg.From = new MailAddress(cf.MailAddress);
-
-                #region
-                //// TOの宛先メールアドレスを設定します。
-                //msg.To.Add(tbTo.Text);
-                //// 複数の宛先を設定するには、カンマ区切りでメールアドレスを追加します。
-                //msg.To.Add(", " + tbTo.Text);
-
-                //msg.To.Add(", " + tbTo.Text);
-                #endregion
 
                 //sc.Send(msg);  //送信
-                sc.SendMailAsync(msg);
-
-               
+                sc.SendMailAsync(msg);     
+                
             }catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
-        //設定ボタンイベントハンドラ
-        private static void ConfigWindowShow() {
-            ConfigWindow cw = new ConfigWindow();
-            cw.ShowDialog();
-        }
+        
 
         //設定ボタン
         private void btConfig_Click(object sender, RoutedEventArgs e) {
@@ -102,17 +91,13 @@ namespace SendMailApp {
         }
 
         //メインウィンドウがロードされるタイミングで呼び出される
-        private void Window_Loaded(object sender, RoutedEventArgs e) {
-            
+        private void Window_Loaded(object sender, RoutedEventArgs e) {   
             try {
-                if (File.Exists("Mail.xml")) {
-                    Config.GetInstance().DeSerialize();
-                } else {
-                    btConfig_Click(sender, e);                  
-                }
-               
-            } catch(Exception ex) {
+                Config.GetInstance().DeSerialize();
+            } catch(FileNotFoundException) {
                 ConfigWindowShow();
+            }catch(Exception ex){
+            MessageBox.Show(ex.Message);
             }
         }
 
@@ -122,8 +107,21 @@ namespace SendMailApp {
                 Config.GetInstance().Serialize();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
-            }
-            
+            }  
         }
+
+        //添付追加
+        //private void addButton_Click(object sender, RoutedEventArgs e) {
+        //    var openD = new OpenFileDialog();
+        //    openD.Filter = "全てのファイル (*.*)|*.*";
+        //    if (openD.ShowDialog()==true) {
+        //        tempList.Items.Add(openD.FileName);
+        //    }
+        //}
+        //
+        ////添付削除
+        //private void deleteButton_Click(object sender, RoutedEventArgs e) {
+        //    tempList.Items.Clear();
+        //}
     }
 }
