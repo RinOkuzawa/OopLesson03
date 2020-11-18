@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace SendMailApp {
     /// <summary>
@@ -38,7 +39,7 @@ namespace SendMailApp {
         }
 
         //送信完了イベント
-        private void Sc_sendCompleted(object sender,System.ComponentModel.AsyncCompletedEventArgs e) {
+        private void Sc_sendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
             if (e.Cancelled) {
                 MessageBox.Show("送信はキャンセルされました");
             } else {
@@ -54,10 +55,10 @@ namespace SendMailApp {
         }
 
         //メール送信処理
-        private void SendButton_Click(object sender, RoutedEventArgs e) {          
+        private void SendButton_Click(object sender, RoutedEventArgs e) {
             try {
                 Config cf = Config.GetInstance();
-                MailMessage msg = new MailMessage(cf.MailAddress,tbTo.Text,tbTitle.Text,tbBody.Text);
+                MailMessage msg = new MailMessage(cf.MailAddress, tbTo.Text, tbTitle.Text, tbBody.Text);
 
                 //msg.Subject = tbTitle.Text; //件名
                 //msg.Body = tbBody.Text; //本文
@@ -74,16 +75,19 @@ namespace SendMailApp {
                 sc.EnableSsl = cf.Ssl;
                 sc.Credentials = new NetworkCredential(cf.MailAddress, cf.PassWord);
 
+                foreach (var item in lbFile.Items) {
+                    msg.Attachments.Add(new Attachment(item.ToString()));
+                }
 
                 //sc.Send(msg);  //送信
-                sc.SendMailAsync(msg);     
-                
-            }catch (Exception ex) {
+                sc.SendMailAsync(msg);
+
+            } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        
+
 
         //設定ボタン
         private void btConfig_Click(object sender, RoutedEventArgs e) {
@@ -91,13 +95,13 @@ namespace SendMailApp {
         }
 
         //メインウィンドウがロードされるタイミングで呼び出される
-        private void Window_Loaded(object sender, RoutedEventArgs e) {   
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             try {
                 Config.GetInstance().DeSerialize();
-            } catch(FileNotFoundException) {
+            } catch (FileNotFoundException) {
                 ConfigWindowShow();
-            }catch(Exception ex){
-            MessageBox.Show(ex.Message);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -107,21 +111,19 @@ namespace SendMailApp {
                 Config.GetInstance().Serialize();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
-            }  
+            }
         }
 
-        //添付追加
-        //private void addButton_Click(object sender, RoutedEventArgs e) {
-        //    var openD = new OpenFileDialog();
-        //    openD.Filter = "全てのファイル (*.*)|*.*";
-        //    if (openD.ShowDialog()==true) {
-        //        tempList.Items.Add(openD.FileName);
-        //    }
-        //}
-        //
-        ////添付削除
-        //private void deleteButton_Click(object sender, RoutedEventArgs e) {
-        //    tempList.Items.Clear();
-        //}
+        private void btAddFile_Click(object sender, RoutedEventArgs e) {
+            var openD = new OpenFileDialog();
+            openD.Filter = "全てのファイル (*.*)|*.*";
+            if (openD.ShowDialog() == true) {
+                lbFile.Items.Add(openD.FileName);
+            }
+        }
+
+        private void btDeleteFile_Click(object sender, RoutedEventArgs e) {
+            lbFile.Items.Clear();
+        }
     }
 }

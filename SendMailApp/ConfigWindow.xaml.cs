@@ -21,7 +21,7 @@ namespace SendMailApp {
     /// ConfigWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class ConfigWindow : Window {
-        
+
         public ConfigWindow() {
             InitializeComponent();
         }
@@ -40,43 +40,48 @@ namespace SendMailApp {
 
         //キャンセルボタン
         private void btCancel_Click(object sender, RoutedEventArgs e) {
-            if(DataCheck()){
-                 ChangeTextJg();
-            }else if(NotenteredCheck()){
-               NotenteredMessage();
-            }else{
+            if (DataCheck()) {
+                ChangeTextJg(sender,e);
+            } else if (NotenteredCheck()) {
+                NotenteredMessage();
+            } else {
                 this.Close();
             }
-        } 
+        }
 
-         //更新処理メソッド
-        public void Apply(){
+        //更新処理メソッド
+        public void Apply() {
             Config.GetInstance().UpdateStatus(
                 tbSmtp.Text,
                 tbSender.Text,
                 tbPassWord.Password,
                 int.Parse(tbPort.Text),
-                cbSsl.IsChecked ?? false ); //更新処理を呼び出す
+                cbSsl.IsChecked ?? false); //更新処理を呼び出す
         }
 
         //適用(更新) 
         private void btApply_Click(object sender, RoutedEventArgs e) {
-            try{
-                Apply();
-                }catch(Exception ex){
+            try {
+                Config.GetInstance().UpdateStatus(
+               tbSmtp.Text,
+               tbSender.Text,
+               tbPassWord.Password,
+               int.Parse(tbPort.Text),
+               cbSsl.IsChecked ?? false); //更新処理を呼び出す
+            } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
         }
 
         //OKボタン
         private void btOk_Click(object sender, RoutedEventArgs e) {
-            ConfigWindow cw = new ConfigWindow();
-            if(cw.tbSmtp.Text == "" || cw.tbUserName.Text == "" || cw.tbPort.Text == ""|| cw.tbPassWord.Password == ""){
+            
+            if (tbSmtp.Text == "" || tbUserName.Text == "" || tbPort.Text == "" || tbPassWord.Password == "") {
                 NotenteredMessage();
-            }else{
-                Apply();//更新処理を呼び出す
+            } else {
+                btApply_Click(sender,e);//更新処理を呼び出す
                 this.Close();
-            }     
+            }
         }
 
         //ロード時に一度だけ呼び出される 設定画面
@@ -95,7 +100,7 @@ namespace SendMailApp {
         public static bool NotenteredCheck() {
             ConfigWindow cw = new ConfigWindow();
             if (cw.tbSmtp.Text == "" || cw.tbUserName.Text == "" || cw.tbSender.Text == "" ||
-                cw.tbPort.Text == ""|| cw.tbPassWord.Password == "") {
+                cw.tbPort.Text == "" || cw.tbPassWord.Password == "") {
                 return true;
             } else {
                 return false;
@@ -112,7 +117,7 @@ namespace SendMailApp {
             } else {
                 return false;
             }
-               
+
         }
         //未入力項目メッセージ
         public static void NotenteredMessage() {
@@ -120,18 +125,18 @@ namespace SendMailApp {
         }
 
         //変更判定メッセージ
-        public static void ChangeTextJg() {
-            ConfigWindow cw = new ConfigWindow();
-            DialogResult result = System.Windows.Forms.MessageBox.Show("変更されていますがキャンセルしてよろしいですか？","警告",
+       private void ChangeTextJg(object sender,RoutedEventArgs e) {
+            
+            DialogResult result = System.Windows.Forms.MessageBox.Show("変更されていますがキャンセルしてよろしいですか？", "警告",
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Exclamation,
                 MessageBoxDefaultButton.Button2);
-           
-            if (result ==  System.Windows.Forms.DialogResult.OK) {
-                cw.Apply();
-                cw.Close();
-            } else  if(result == System.Windows.Forms.DialogResult.Cancel){
-               cw.Close();
+
+            if (result == System.Windows.Forms.DialogResult.OK) {
+                btApply_Click(sender,e);
+                this.Close();
+            } else if (result == System.Windows.Forms.DialogResult.Cancel) {
+                this.Close();
             }
         }
     }

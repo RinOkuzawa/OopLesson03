@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Serialization;
 
 namespace SendMailApp {
-    public class Config { 
+    public class Config {
 
         //単一のインスタンス
         private static Config instance;
@@ -16,7 +16,7 @@ namespace SendMailApp {
         public string Smtp { get; set; }　//SMTPサーバー
         public string MailAddress { get; set; }　//自メールアドレス(送信元)
         public string PassWord { get; set; }　//パスワード
-        public int Port  { get; set; }　//ポート番号
+        public int Port { get; set; }　//ポート番号
         public bool Ssl { get; set; } //SSL設定
 
         //インスタンスの取得
@@ -41,8 +41,7 @@ namespace SendMailApp {
 
         //初期値取得用
         public Config GetDefaultStatus() {
-            Config obj = new Config()
-            {
+            Config obj = new Config() {
                 Smtp = "smtp.gmail.com",
                 MailAddress = "ojsinfosys01@gmail.com",
                 PassWord = "ojsInfosys2020",
@@ -51,9 +50,9 @@ namespace SendMailApp {
             };
             return obj;
         }
-        
+
         //設定データ更新
-        public bool UpdateStatus(string smtp,string mailAddress,string passWord,int port,bool ssl) {
+        public bool UpdateStatus(string smtp, string mailAddress, string passWord, int port, bool ssl) {
 
             this.Smtp = smtp;
             this.MailAddress = mailAddress;
@@ -68,7 +67,7 @@ namespace SendMailApp {
         public void Serialize() {
             using (var writer = XmlWriter.Create("Mail.xml")) {
                 var serializer = new XmlSerializer(instance.GetType());
-                serializer.Serialize(writer,instance);
+                serializer.Serialize(writer, instance);
             }
         }
 
